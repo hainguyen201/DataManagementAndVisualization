@@ -11,7 +11,7 @@ services:
       - 9870:9870
      
     volumes:
-      - ${basePath}/hadoop_namenode:/hadoop/dfs/name
+      - hadoop_namenode:/hadoop/dfs/name
     environment:
       - CLUSTER_NAME=test
     env_file:
@@ -22,7 +22,7 @@ services:
     # container_name: datanode
     restart: always
     volumes:
-      - ${basePath}/hadoop_datanode:/hadoop/dfs/data
+      - hadoop_datanode:/hadoop/dfs/data
     environment:
       SERVICE_PRECONDITION: "namenode:9870"
     env_file:
@@ -51,23 +51,39 @@ services:
       - 8000:8000/tcp
       # Cluster Node Protocol
       #- 11443:11443/tcp
+    environment:
+      SINGLE_USER_CREDENTIALS_USERNAME: hainvadmin
+      SINGLE_USER_CREDENTIALS_PASSWORD: hainvadmin@123
     volumes:
-      # mkdir /var/lib/nifi && chown -R 1000:1000 /var/lib/nifi
-      - ${basePath}/nifi/database_repository:/opt/nifi/nifi-current/database_repository
-      - ${basePath}/nifi/flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
-      - ${basePath}/nifi/content_repository:/opt/nifi/nifi-current/content_repository
-      - ${basePath}/nifi/provenance_repository:/opt/nifi/nifi-current/provenance_repository
-      - ${basePath}/nifi/state:/opt/nifi/nifi-current/state
-      - ${basePath}/nifi/logs:/opt/nifi/nifi-current/logs
-# volumes:
-#   hadoop_namenode:
-#     driver_opts:
-#       type: "nfs"
-#       device: ${basePath}/hadoop_namenode
-#   hadoop_datanode:
-#     driver_opts:
-#       type: "nfs"
-#       device: ${basePath}/hadoop_datanode
-  # shared-workspace:
-  #   name: "hadoop-distributed-file-system"
-  #   driver: local
+      - ./hdfs-conf:/opt/nifi/nifi-current/hdfs-conf
+      # - ./nifi/database_repository:/opt/nifi/nifi-current/database_repository
+      # - ./nifi/flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
+      # - ./nifi/content_repository:/opt/nifi/nifi-current/content_repository
+      # - ./nifi/provenance_repository:/opt/nifi/nifi-current/provenance_repository
+      # - ./nifi/state:/opt/nifi/nifi-current/state
+      - ./nifi_state:/opt/nifi/nifi-current/state
+      - ./nifi_db:/opt/nifi/nifi-current/database_repository
+      - ./nifi_flowfile:/opt/nifi/nifi-current/flowfile_repository
+      - ./nifi_content:/opt/nifi/nifi-current/content_repository
+      - ./nifi_provenance:/opt/nifi/nifi-current/provenance_repository  
+  pyspark:
+    image: jupyter/pyspark-notebook:python-3.8.8
+    container_name: pyspark-notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./pyspark/:/home/jovyan/work/
+    healthcheck:
+      interval: 5s
+      retries: 100 
+    env_file:
+      - ./hadoop.env
+    environment:
+      JAVA_HOME: /home/jovyan/work/jdk1.8.0_202
+volumes:
+  hadoop_namenode:
+  hadoop_datanode:
+  nifi:
+  shared-workspace:
+    name: "hadoop-distributed-file-system"
+    driver: local
