@@ -15,6 +15,6 @@ docker-compose up -d
   Truy cập file DataCovidAnalysis.ipynb
 # Chạy nifi download dữ liệu trên internet
  - Truy cập nifi: https://localhost:8443/nifi
- - Upload file template PullDataTemplate
+ - Upload file template PullDataTemplate.xml
  - Chạy từng group process tương ứng để tải dữ liệu về HDFS
    
