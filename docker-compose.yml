@@ -1,7 +1,4 @@
 version: "3.6"
-
-
-
 services:
   namenode:
     image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
@@ -78,8 +75,6 @@ services:
       retries: 100 
     env_file:
       - ./hadoop.env
-    environment:
-      JAVA_HOME: /home/jovyan/work/jdk1.8.0_202
 volumes:
   hadoop_namenode:
   hadoop_datanode:
