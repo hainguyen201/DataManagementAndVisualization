@@ -7,6 +7,7 @@ docker-compose up -d
 - Truy cập vào hadoop namenode: http://localhost:9870
 - Truy cập vào pyspark
   ```
+  Xem log
   docker logs -f pyspark-notebook
   ```
   Truy cập đường dẫn bắt đầu bởi: http://127.0.0.1:8888/
