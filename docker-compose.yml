@@ -57,7 +57,7 @@ services:
       # - ./nifi/flowfile_repository:/opt/nifi/nifi-current/flowfile_repository
       # - ./nifi/content_repository:/opt/nifi/nifi-current/content_repository
       # - ./nifi/provenance_repository:/opt/nifi/nifi-current/provenance_repository
-      # - ./nifi/state:/opt/nifi/nifi-current/state
+      # - ./nifi/state:/opt/nifi/nifi-current/stategit 
       # - ./nifi_state:/opt/nifi/nifi-current/state
       # - ./nifi_db:/opt/nifi/nifi-current/database_repository
       # - ./nifi_flowfile:/opt/nifi/nifi-current/flowfile_repository
