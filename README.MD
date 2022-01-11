@@ -11,7 +11,7 @@ docker-compose up -d
   docker logs -f pyspark-notebook
   ```
   Truy cập đường dẫn bắt đầu bởi: http://127.0.0.1:8888/
-# File chạy các biểu đồ tr: 
+# File chạy các biểu đồ: 
   Truy cập file DataCovidAnalysis.ipynb
 # Chạy nifi download dữ liệu trên internet
  - Truy cập nifi: https://localhost:8443/nifi
